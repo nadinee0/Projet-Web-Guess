@@ -1,7 +1,11 @@
 
 <?php
 include 'header.php';
+include "C:/xampp/htdocs/proj/controller/cart.php";
+$cartCvar =new cartC();
+$listepaniers=$cartCvar->afficherpaniers();
 ?>
+
 
         <main class="main">
         	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
@@ -27,6 +31,26 @@ include 'header.php';
 	                			<table class="table table-cart table-mobile">
 									<thead>
 										<tr>
+											
+<?PHP
+foreach($listepaniers as $row){
+	?>
+	<tr>
+	
+    <td><?PHP echo $row['nom_produit']; ?></td>
+   <td><?PHP echo $row['quantite']; ?></td>
+   <td><?PHP echo $row['prix']; ?></td>
+   <td><?PHP echo $row['total']; ?></td>
+	<td><form method="POST" action="supprimerpanier.php">
+	<input type="submit" name="supprimer" value="supprimer">
+	<input type="hidden" value="<?PHP echo $row['id_Produit']; ?>" name="id_Produit">
+	</form>
+	</td>
+	
+	</tr>
+	<?PHP
+}
+?>
 											<th>Product</th>
 											<th>Price</th>
 											<th>Quantity</th>
@@ -46,17 +70,17 @@ include 'header.php';
 													</figure>
 
 													<h3 class="product-title">
-														<a href="#">Beige knitted elastic runner shoes</a>
+														<a href="afficherpanier.php"></a>
 													</h3><!-- End .product-title -->
 												</div><!-- End .product -->
 											</td>
-											<td class="price-col">$84.00</td>
+											<td class="price-col"></td>
 											<td class="quantity-col">
                                                 <div class="cart-product-quantity">
                                                     <input type="number" class="form-control" value="1" min="1" max="10" step="1" data-decimals="0" required>
                                                 </div><!-- End .cart-product-quantity -->
                                             </td>
-											<td class="total-col">$84.00</td>
+											<td class="total-col"></td>
 											<td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
 										</tr>
 										<tr>
@@ -80,6 +104,7 @@ include 'header.php';
                                                 </div><!-- End .cart-product-quantity -->                                 
                                             </td>
 											<td class="total-col">$76.00</td>
+											<form method="POST" action="supprimerpanier.php"> </form>
 											<td class="remove-col"><button class="btn-remove"><i class="icon-close"></i></button></td>
 										</tr>
 									</tbody>
@@ -97,7 +122,8 @@ include 'header.php';
 			            				</form>
 			            			</div><!-- End .cart-discount -->
 
-			            			<a href="#" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a>
+			            			<form method="POST" action="modifierpanier.php"> </form>
+									<a href="panier.php" class="btn btn-outline-dark-2"><span>UPDATE CART</span><i class="icon-refresh"></i></a>
 		            			</div><!-- End .cart-bottom -->
 	                		</div><!-- End .col-lg-9 -->
 	                		<aside class="col-lg-3">
@@ -160,7 +186,7 @@ include 'header.php';
 	                				<a href="checkout.html" class="btn btn-outline-primary-2 btn-order btn-block">PROCEED TO CHECKOUT</a>
 	                			</div><!-- End .summary -->
 
-		            			<a href="category.html" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
+		            			<a href="category.php" class="btn btn-outline-dark-2 btn-block mb-3"><span>CONTINUE SHOPPING</span><i class="icon-refresh"></i></a>
 	                		</aside><!-- End .col-lg-3 -->
 	                	</div><!-- End .row -->
 	                </div><!-- End .container -->

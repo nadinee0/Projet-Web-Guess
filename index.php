@@ -189,7 +189,7 @@ include 'headerindex.php';
                                     </div><!-- End .product-action -->
 
                                     <div class="product-action product-action-transparent">
-                                        <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                       <!-- <a href="#" class="btn-product btn-cart"><span>add to cart</span></a> --> <button type="submit" class="btn btn-warning my-3" name="add">Add to Cart </button>
                                     </div><!-- End .product-action -->
                                 </figure><!-- End .product-media -->
 
