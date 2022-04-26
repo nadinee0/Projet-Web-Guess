@@ -42,7 +42,7 @@ if (
             $_POST['nom'],
             $_POST['email']
         );
-        $blogC->ajoutercommentaire($comment);
+        $commentaireA->ajoutercommentaire($comment);
 
         echo '<script>window.location.replace("article.php?id='.$id.'");</script>';    }
     else
@@ -52,7 +52,7 @@ if (
         <main class="main">
         	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         		<div class="container">
-        			<h1 class="page-title">Default With Sidebar<span>Single Post</span></h1>
+        			<h1 class="page-title"><?php echo $blog['titre']; ?><span><?php echo $blog['categorie']; ?></span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
@@ -60,7 +60,7 @@ if (
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Blog</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Default With Sidebar</li>
+                        <li class="breadcrumb-item active" aria-current="page"><?php echo $blog['titre']; ?></li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
@@ -71,7 +71,7 @@ if (
                 		<div class="col-lg-9">
                             <article class="entry single-entry">
                                 <figure class="entry-media">
-                                    <img src="assets/images/blog/single/1.jpg" alt="image desc">
+                                    <img src="back/image/<?php echo $blog['img']; ?>" alt="image desc">
                                 </figure><!-- End .entry-media -->
 
                                 <div class="entry-body">
@@ -80,9 +80,15 @@ if (
                                             by <a href="#">John Doe</a>
                                         </span>
                                         <span class="meta-separator">|</span>
-                                        <a href="#">Nov 22, 2018</a>
+                                        <a href="#"><?php echo $blog['date']; ?></a>
                                         <span class="meta-separator">|</span>
-                                        <a href="#">2 Comments</a>
+                                        <a href="#"><?php echo $count['count']; ?> Commentaires</a>
+                                        <div class="likediv" style="flex: 50%;text-align: right;">
+                                        <i 
+      		                            class="fa fa-thumbs-o-up like-btn"
+      	                                 data-id="<?php echo $blog['id'] ?>" style="font-size: 17px;"></i>
+                                    	<span class="likes"><?php echo $blog['jaime']; ?></span>                                        
+                                        </div>
                                     </div><!-- End .entry-meta -->
 
                                     <h2 class="entry-title">
@@ -318,7 +324,7 @@ if (
                                     <p class="title-desc">Your email address will not be published. Required fields are marked *</p>
                                 </div><!-- End .heading -->
 
-                                <form action="" method="post">
+                                <form name="comment" action="" method="post" onsubmit="return ajoutercomment()">
                                     <label for="reply-message" class="sr-only">Comment</label>
                                     <textarea name="commentaire" id="reply-message" cols="30" rows="4" class="form-control" required placeholder="Comment *"></textarea>
 
@@ -348,9 +354,9 @@ if (
                 				<div class="widget widget-search">
                                     <h3 class="widget-title">Search</h3><!-- End .widget-title -->
 
-                                    <form action="#">
+                                    <form action="searchblog.php">
                                         <label for="ws" class="sr-only">Search in blog</label>
-                                        <input type="search" class="form-control" name="ws" id="ws" placeholder="Search in blog" required>
+                                        <input type="search" class="form-control" name="search" id="ws" placeholder="Search in blog" required>
                                         <button type="submit" class="btn"><i class="icon-search"></i><span class="sr-only">Search</span></button>
                                     </form>
                 				</div><!-- End .widget -->
@@ -459,10 +465,95 @@ if (
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
-        <?php
+   <?php
 }else{
    echo '<script>window.location.replace("blog.php");</script>';
 
 }
 include 'footer.php';
 ?>
+<script>
+$(document).ready(function(){
+
+// if the user clicks on the like button ...
+$('.like-btn').on('click', function(){
+  var post_id = $(this).data('id');
+  $clicked_btn = $(this);
+  if ($clicked_btn.hasClass('fa-thumbs-o-up')) {
+  	action = 'like';
+  } 
+  $.ajax({
+  	url: 'like.php',
+  	type: 'post',
+  	data: {
+  		'action': action,
+  		'post_id': post_id
+  	},
+  	success: function(data){
+  		res = JSON.parse(data);
+  		if (action == "like") {
+  			$clicked_btn.removeClass('fa-thumbs-o-up');
+  			$clicked_btn.addClass('fa-thumbs-up');
+  		} 
+  		// display the number of likes and dislikes
+  		$clicked_btn.siblings('span.likes').text(res.likes);
+  		$clicked_btn.siblings('span.dislikes').text(res.dislikes);
+
+  		// change button styling of the other button if user is reacting the second time to post
+  		$clicked_btn.siblings('i.fa-thumbs-down').removeClass('fa-thumbs-down').addClass('fa-thumbs-o-down');
+  	}
+  });		
+
+});
+});
+
+function ajoutercomment() {
+    var nom= document.comment.nom.value;
+    var contenu = document.comment.commentaire.value;
+    var email = document.comment.email.value;
+  
+   var verif = -1;
+    if (nom.length == 0) {
+      alert("Nom est obligatoire");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (!isNaN(nom)) {   
+      alert("Nom doit comporter une Lettre");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (contenu.length == 0) {
+      alert("commentaire est obligatoire");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (!isNaN(contenu)) {   
+      alert("le commentaire doit comporter une Lettre");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (email.length == 0) {
+      alert("l'email est obligatoire");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (!isNaN(email)) {   
+      alert("l'email doit comporter une Lettre");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+      verif = 1;
+    else{
+      alert("l'email n'est pas valide");
+      verif = 0;
+      return false;
+    }
+
+    if (verif == 1) {  
+      return true;
+    }
+  }
+
+</script>   

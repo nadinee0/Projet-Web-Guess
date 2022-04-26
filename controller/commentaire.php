@@ -2,8 +2,8 @@
 	include_once  $_SERVER['DOCUMENT_ROOT'].'/proj/config.php';
 	include_once $_SERVER['DOCUMENT_ROOT'].'/proj/model/commentaire.php';
 	class commentaireA {
-		function affichercommentaireback(){
-			$sql="SELECT * FROM commentaire";
+		function affichercommentaireback($id){
+			$sql="SELECT * FROM commentaire where id_blog=".$id;
 			$db = config::getConnexion();
 			try{
 				$liste = $db->query($sql);

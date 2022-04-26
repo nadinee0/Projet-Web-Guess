@@ -46,6 +46,7 @@ $listeblog=$bloga->afficherblogback();
 				<th>Categorie</th>
 				<th>Date</th>
 				<th>Jaime</th>
+        <th>Commentaires</th>
 				<th>Modifier</th>
 				<th>Supprimer</th>
 			</tr>
@@ -59,6 +60,9 @@ $listeblog=$bloga->afficherblogback();
 				<td><?php echo $article['categorie']; ?></td>
 				<td><?php echo $article['date']; ?></td>
 				<td><?php echo $article['jaime']; ?></td>
+        <td>
+        <button name="Modifier" class="btn btn-primary"><a style="color:white;" href="commentaires.php?id=<?php echo $article['id']; ?>">Commentaires</a></button>
+				</td>
 				<td>
 					<form method="POST" action="modifierblog.php">
           <button type="submit" name="Modifier" class="btn btn-primary">Modifier</button>
@@ -67,7 +71,6 @@ $listeblog=$bloga->afficherblogback();
 				</td>
 				<td>
         <button name="Modifier" class="btn btn-primary"><a style="color:white;" href="supprimerblog.php?id=<?php echo $article['id']; ?>">Supprimer</a></button>
-
 				</td>
 			</tr>
 			<?php
@@ -80,7 +83,9 @@ $listeblog=$bloga->afficherblogback();
     </div>
     </div>
     </section>
+    
             </div>
+            
         <?php
 include 'footer.php';
 ?>

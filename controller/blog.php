@@ -36,9 +36,9 @@
 				die('Erreur:'. $e->getMeesage());
 			}
 		}
-		function ajouterblog($blog){
-			$sql="INSERT INTO blog (titre, contenu, categorie, date, jaime) 
-			VALUES (:titre,:contenu,:categorie, :date,:jaime)";
+		function ajouterblog($blog,$img){
+			$sql="INSERT INTO blog (titre, contenu, categorie, date, jaime,img) 
+			VALUES (:titre,:contenu,:categorie, :date,:jaime,:img)";
 			$db = config::getConnexion();
 			try{
 				$query = $db->prepare($sql);
@@ -49,7 +49,8 @@
 					'contenu' => $blog->getcontenu(),
 					'categorie' => $blog->getcategorie(),
 					'date' => $date,
-					'jaime' => $blog->getjaime()
+					'jaime' => $blog->getjaime(),
+					'img' => $img
 				]);			
 			}
 			catch (Exception $e){
@@ -65,6 +66,17 @@
 
 				$blog=$query->fetch();
 				return $blog;
+			}
+			catch (Exception $e){
+				die('Erreur: '.$e->getMessage());
+			}
+		}
+		function searchblog($value){
+			$sql="SELECT * from blog where titre like '%".$value."%'";
+			$db = config::getConnexion();
+			try{
+				$liste = $db->query($sql);
+				return $liste;
 			}
 			catch (Exception $e){
 				die('Erreur: '.$e->getMessage());
@@ -92,11 +104,32 @@
 					'date' => $blog->getdate(),
 					'id' => $id
 				]);
-				echo $query->rowCount() . " records UPDATED successfully <br>";
 			} catch (PDOException $e) {
 				$e->getMessage();
 			}
 		}
+		function getlikes($id)
+		{
+		  global $conn;
+		  $rating = array();
+		  $sql = "SELECT jaime FROM blog WHERE id = $id";
+		  $db = config::getConnexion();
+		  try{
+			$query=$db->prepare($sql);
+			$query->execute();
+
+			$blog=$query->fetch();
+			$rating = [
+				'likes' => $blog['jaime']
+			];
+			return json_encode($rating);
+		}
+		catch (Exception $e){
+			die('Erreur: '.$e->getMessage());
+		}
+
+
+		}		
 	
 		
 

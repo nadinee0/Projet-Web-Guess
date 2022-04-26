@@ -1,13 +1,24 @@
 
 <?php
 include 'header.php';
+include_once '../controller/product.php';
+include_once '../controller/promotion.php';
+if (isset($_GET["id"])){
+    $producta=new productA();
+    $promotion= new promotionA();
+    $produit=$producta->recupererproduct($_GET['id']); 
+    $promo=$promotion->verifierpromo($_GET['id']);
+    //var_dump($promo);
+if (!$produit){
+    echo '<script>window.location.replace("category.php");</script>';
+}
 ?>
 
 <main class="main">
             <nav aria-label="breadcrumb" class="breadcrumb-nav border-0 mb-0">
                 <div class="container d-flex align-items-center">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="index.html">home</a></li>
                         <li class="breadcrumb-item"><a href="#">Products</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Extended Description</li>
                     </ol>
@@ -33,8 +44,7 @@ include 'header.php';
                             <div class="col-md-6">
                                 <div class="product-gallery">
                                     <figure class="product-main-image">
-                                        <img id="product-zoom" src="assets/images/products/single/extended/3.jpg" data-zoom-image="assets/images/products/single/extended/3-big.jpg" alt="product image">
-
+                                        <img id="product-zoom" src="assets/images/products/single/extended/p1.jpg" data-zoom-image="assets/images/products/single/extended/3-big.jpg" alt="product image">
                                         <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                             <i class="icon-arrows"></i>
                                         </a>
@@ -63,7 +73,7 @@ include 'header.php';
 
                             <div class="col-md-6">
                                 <div class="product-details">
-                                    <h1 class="product-title">Yellow tie strap block heel sandals</h1><!-- End .product-title -->
+                                    <h1 class="product-title"><?php echo $produit['titre']; ?></h1><!-- End .product-title -->
 
                                     <div class="ratings-container">
                                         <div class="ratings">
@@ -71,13 +81,20 @@ include 'header.php';
                                         </div><!-- End .ratings -->
                                         <a class="ratings-text" href="#product-review-link" id="review-link">( 2 Reviews )</a>
                                     </div><!-- End .rating-container -->
-
+                                    <?php if ($promo != false){ ?>
                                     <div class="product-price">
-                                        $70.00
+                                    <?php echo ($produit['prix']*$promo['pourcentage']/100).' TND'; ?>
+                                    </div>
+                                    <div class="product-price" style="text-decoration: line-through;color: #6c757d;font-size: 2.0rem;">
+                                    <?php echo $produit['prix'].' TND'; ?>
+                                    </div>
+                                    <?php }else { ?>
+                                    <div class="product-price">
+                                    <?php echo $produit['prix'].' TND'; ?>
                                     </div><!-- End .product-price -->
-
+                                    <?php } ?>
                                     <div class="product-content">
-                                        <p>Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus. </p>
+                                        <p><?php echo $produit['description']; ?></p>
                                     </div><!-- End .product-content -->
 
                                     <div class="details-filter-row details-row-size">
@@ -91,20 +108,7 @@ include 'header.php';
                                         </div><!-- End .product-nav -->
                                     </div><!-- End .details-filter-row -->
 
-                                    <div class="details-filter-row details-row-size">
-                                        <label for="size">Size:</label>
-                                        <div class="select-custom">
-                                            <select name="size" id="size" class="form-control">
-                                                <option value="#" selected="selected">Select a size</option>
-                                                <option value="s">Small</option>
-                                                <option value="m">Medium</option>
-                                                <option value="l">Large</option>
-                                                <option value="xl">Extra Large</option>
-                                            </select>
-                                        </div><!-- End .select-custom -->
-
-                                        <a href="#" class="size-guide"><i class="icon-th-list"></i>size guide</a>
-                                    </div><!-- End .details-filter-row -->
+                                   
 
                                     <div class="details-filter-row details-row-size">
                                         <label for="qty">Qty:</label>
@@ -125,10 +129,8 @@ include 'header.php';
                                     <div class="product-details-footer">
                                         <div class="product-cat">
                                             <span>Category:</span>
-                                            <a href="#">Women</a>,
-                                            <a href="#">Shoes</a>,
-                                            <a href="#">Sandals</a>,
-                                            <a href="#">Yellow</a>
+                                        <a><?php echo $produit['category']; ?></a>
+                                    </div><!-- End .product-content -->
                                         </div><!-- End .product-cat -->
 
                                         <div class="social-icons social-icons-sm">
@@ -529,5 +531,9 @@ include 'header.php';
 
 
         <?php
+                }else{
+                    echo '<script>window.location.replace("category.php");</script>';
+                 
+                 }
 include 'footer.php';
 ?>

@@ -1,9 +1,10 @@
 <?php
 include 'header.php';
-//include '../../config.php';
 include '../../controller/commentaire.php';
+if (isset($_GET["id"])){
+
 $commentaire=new commentaireA();
-$commentaire=$commentaire->affichercommentaireback(); 
+$commentaire=$commentaire->affichercommentaireback($_GET["id"]); 
 ?>
 
 <div class="content-wrapper">
@@ -48,8 +49,19 @@ $commentaire=$commentaire->affichercommentaireback();
 				<th>Modifier</th>
 				<th>Supprimer</th>
 			</tr>
+      <?php
+        $ress = $commentaire->fetchAll();
+        if (empty($ress)){
+			?>
+      <td colspan="8">
+        <div class="alert alert-danger" role="alert">
+          Pas de Commentaires </br> Article num: <?php echo $_GET["id"]; ?>
+        </div>
+      </td>
+      
 			<?php
-				foreach($commentaire as $comment){
+        }
+				foreach($ress as $comment){
 			?>
 			<tr>
 				<td><?php echo $comment['id']; ?></td>
@@ -62,6 +74,7 @@ $commentaire=$commentaire->affichercommentaireback();
 					<form method="POST" action="modifiercommentaire.php">
           <button type="submit" name="Modifier" class="btn btn-primary">Modifier</button>
 						<input type="hidden" value=<?PHP echo $comment['id']; ?> name="id">
+            <input type="hidden" value=<?PHP echo $comment['id_blog']; ?> name="id_blog">
 					</form>
 				</td>
 				<td>
@@ -69,9 +82,11 @@ $commentaire=$commentaire->affichercommentaireback();
 
 				</td>
 			</tr>
+      
 			<?php
 				}
 			?>
+      
 		    </table>
     </div>
     </div>
@@ -81,5 +96,10 @@ $commentaire=$commentaire->affichercommentaireback();
     </section>
             </div>
         <?php
+}else{
+  echo '<script>window.location.replace("gestionblog.php");</script>';
+
+}
+
 include 'footer.php';
 ?>

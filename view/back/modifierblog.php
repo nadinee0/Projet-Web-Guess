@@ -85,10 +85,10 @@ include 'header.php';
               <div class="card-header">
                 <h3 class="card-title">Quick Example</h3>
               </div>
-        <form action="" method="POST">
+        <form name="blog" action="" method="POST" onsubmit="return modifierblog()">
                 
                   <div class="card-body">
-                  <div class="form-group">
+                  <div style="display:none;" class="form-group">
                   <label for="exampleInputEmail1">Numero Blog:</label>
                   <input type="text" name="id" class="form-control"  value="<?php echo $blog['id']; ?>" maxlength="20">
                   </div>
@@ -131,6 +131,71 @@ include 'header.php';
 		<?php
 		}
 		?>
+<script>
+function modifierblog() {
+    var titre = document.blog.titre.value;
+    var contenu = document.blog.contenu.value;
+    var categorie = document.blog.categorie.value;
+    var date = document.blog.date.value;
+    var jaime = document.blog.jaime.value;
+
+  
+   var verif = -1;
+    if (titre.length == 0) {
+      alert("Le titre est obligatoire");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (!isNaN(titre)) {   
+      alert("le titre doit  comporter une Lettre");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (contenu.length == 0) {
+      alert("contenu est obligatoire");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (!isNaN(contenu)) {   
+      alert("le contenu doit comporter une Lettre");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (date.length == 0) {
+        alert("date est obligatoire");
+        verif = 0;
+        return false;
+      } else verif = 1;
+      if (categorie.length == 0) {
+        alert("categorie est obligatoire");
+        verif = 0;
+        return false;
+      } else verif = 1;
+      if (!isNaN(categorie)) {   
+      alert("categorie doit comporter une Lettre");
+      verif = 0;
+      return false;
+    } else verif = 1;
+      if (jaime.length == 0) {
+      alert("Champ jaime est obligatoire");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    let isnum = /^\d+$/.test(jaime);
+      if (isnum == false) {   
+        alert("jaime ne doit pas comporter une Lettre");
+        verif = 0;
+        return false;
+      } else verif = 1;
+
+
+    if (verif == 1) {  
+      return true;
+    }
+  }
+
+
+</script>
         </div>
 <?php
 include 'footer.php';

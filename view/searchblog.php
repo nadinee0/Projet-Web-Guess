@@ -3,15 +3,18 @@
 include 'header.php';
 include '../controller/blog.php';
 $bloga=new blogA();
-$listeblog=$bloga->afficherblog(); 
+if (isset($_GET["search"])&&!empty($_GET["search"])){
 
+$listeblog=$bloga->searchblog($_GET["search"]); 
 
-  
 ?>
-        <main class="main">
+
+
+
+<main class="main">
         	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
         		<div class="container">
-        			<h1 class="page-title">Blog Classic<span>Blog</span></h1>
+        			<h1 class="page-title">Blog Grid With Sidebar<span>Blog</span></h1>
         		</div><!-- End .container -->
         	</div><!-- End .page-header -->
             <nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
@@ -19,7 +22,7 @@ $listeblog=$bloga->afficherblog();
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                         <li class="breadcrumb-item"><a href="#">Blog</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Classic</li>
+                        <li class="breadcrumb-item active" aria-current="page">Grid With Sidebar</li>
                     </ol>
                 </div><!-- End .container -->
             </nav><!-- End .breadcrumb-nav -->
@@ -28,61 +31,69 @@ $listeblog=$bloga->afficherblog();
                 <div class="container">
                 	<div class="row">
                 		<div class="col-lg-9">
-                        <?php
+                            <div class="entry-container max-col-2" data-layout="fitRows">
+                            <?php
 				            foreach($listeblog as $article){
 			            ?>
-                            <article class="entry">
-                                <figure class="entry-media">
-                                    <a href="article.php?id=<?php echo $article['id']; ?>">
-                                        <img src="back/image/<?php echo $article['img']; ?>" alt="image desc">
-                                    </a>
-                                </figure><!-- End .entry-media -->
 
-                                <div class="entry-body">
-                                    <div class="entry-meta">
-                                        <span class="entry-author">
-                                            by <a href="#">John Doe</a>
-                                        </span>
-                                        <span class="meta-separator">|</span>
-                                        <a href="#">Nov 22, 2018</a>
-                                        <span class="meta-separator">|</span>
-                                        <a href="#">2 Comments</a>
-                                    </div><!-- End .entry-meta -->
+                                <div class="entry-item col-sm-6">
+                                    <article class="entry entry-grid">
+                                        <figure class="entry-media">
+                                            <a href="article.php?id=<?php echo $article['id']; ?>">
+                                                <img src="back/image/<?php echo $article['img']; ?>" alt="image desc">
+                                            </a>
+                                        </figure><!-- End .entry-media -->
 
-                                    <h2 class="entry-title">
-                                        <a href="article.php?id=<?php echo $article['id']; ?>"><?php echo $article['titre']; ?></a>
-                                    </h2><!-- End .entry-title -->
+                                        <div class="entry-body">
+                                            <div class="entry-meta">
+                                                <span class="entry-author">
+                                                    by <a href="#">John Doe</a>
+                                                </span>
+                                                <span class="meta-separator">|</span>
+                                                <a href="#"><?php echo $article['date']; ?></a>
+                                                <span class="meta-separator">|</span>
+                                                <a href="#">2 Comments</a>
+                                            </div><!-- End .entry-meta -->
 
-                                    <div class="entry-cats">
-                                        in <a href="#"><?php echo $article['categorie']; ?></a>,
-                                    </div><!-- End .entry-cats -->
+                                            <h2 class="entry-title">
+                                                <a href="article.php?id=<?php echo $article['id']; ?>"><?php echo $article['titre']; ?></a>
+                                            </h2><!-- End .entry-title -->
 
-                                    <div class="entry-content">
-                                        <p><?php echo $article['contenu']; ?><</p>
-                                        <a href="article.php?id=<?php echo $article['id']; ?>" class="read-more">Continue Reading</a>
-                                    </div><!-- End .entry-content -->
-                                </div><!-- End .entry-body -->
-                            </article><!-- End .entry -->
-                            <?php
+                                            <div class="entry-cats">
+                                                in <a href="#">Lifestyle</a>,
+                                            </div><!-- End .entry-cats -->
+
+                                            <div class="entry-content">
+                                                <a href="article.php?id=<?php echo $article['id']; ?>" class="read-more">Continue Reading</a>
+                                            </div><!-- End .entry-content -->
+                                        </div><!-- End .entry-body -->
+                                    </article><!-- End .entry -->
+                                </div><!-- End .entry-item -->
+                                <?php
 				                }
 			                ?>
-                        
-                			<nav aria-label="Page navigation">
-							    <ul class="pagination">
-							        <li class="page-item disabled">
-							            <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
-							                <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
-							            </a>
-							        </li>
-							        <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-							        <li class="page-item"><a class="page-link" href="#">2</a></li>
-							        <li class="page-item">
-							            <a class="page-link page-link-next" href="#" aria-label="Next">
-							                Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
-							            </a>
-							        </li>
-							    </ul>
-							</nav>
+                                       
+  
+
+                             
+                            </div><!-- End .entry-container -->
+
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination">
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
+                                            <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+                                        </a>
+                                    </li>
+                                    <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link page-link-next" href="#" aria-label="Next">
+                                            Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
                 		</div><!-- End .col-lg-9 -->
 
                 		<aside class="col-lg-3">
@@ -201,6 +212,12 @@ $listeblog=$bloga->afficherblog();
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
         </main><!-- End .main -->
-        <?php
+
+
+<?php
+}else{
+    echo '<script>window.location.replace("blog.php");</script>';
+ 
+ }
 include 'footer.php';
 ?>

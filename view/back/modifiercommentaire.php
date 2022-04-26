@@ -34,7 +34,7 @@
                 $_POST['email']
             );
             $commentaire->modifiercommentaire($comment, $_POST["id"]);
-            header('Location:commentaires.php');
+            header('Location:commentaires.php?id='.$_POST["id_blog"]);
         }
         else
             $error = "Missing information";
@@ -62,7 +62,7 @@ include 'header.php';
         </div>
       </div><!-- /.container-fluid -->
     </section>
-    <button class="btn btn-primary"><a href="commentaires.php" style="color:white;">Retour à la liste des commentaires</a></button>
+    <button class="btn btn-primary"><a href="commentaires.php?id=<?php echo $_POST["id_blog"]; ?>" style="color:white;">Retour à la liste des commentaires</a></button>
         <hr>
         <div id="error">
             <?php echo $error; ?>
@@ -84,11 +84,10 @@ include 'header.php';
               <div class="card-header">
                 <h3 class="card-title">Quick Example</h3>
               </div>
-        <form action="" method="POST">
+        <form name="comment" action="" method="POST" onsubmit="return modifiercomment()">
                 
                   <div class="card-body">
-                  <div class="form-group">
-                  <label for="exampleInputEmail1">Id commentaire:</label>
+                  <div style="display:none;" class="form-group">
                   <input type="text" name="id" class="form-control"  value="<?php echo $commentaire['id']; ?>" maxlength="20">
                   </div>
                   <div class="form-group">
@@ -131,6 +130,79 @@ include 'header.php';
 		}
 		?>
         </div>
+
+        <script>
+function modifiercomment() {
+    var nom= document.comment.nom.value;
+    var contenu = document.comment.commentaire.value;
+    var email = document.comment.email.value;
+    var date = document.comment.date.value;
+    var idblog = document.comment.id_blog.value;
+
+  
+   var verif = -1;
+    if (nom.length == 0) {
+      alert("Nom est obligatoire");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (!isNaN(nom)) {   
+      alert("Nom doit comporter une Lettre");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (contenu.length == 0) {
+      alert("commentaire est obligatoire");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (!isNaN(contenu)) {   
+      alert("le commentaire doit comporter une Lettre");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (email.length == 0) {
+      alert("l'email est obligatoire");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (!isNaN(email)) {   
+      alert("l'email doit comporter une Lettre");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))
+      verif = 1;
+    else{
+      alert("l'email n'est pas valide");
+      verif = 0;
+      return false;
+    }
+    if (date.length == 0) {
+        alert("date est obligatoire");
+        verif = 0;
+        return false;
+      } else verif = 1;
+      if (idblog.length == 0) {
+      alert("Champ idblog est obligatoire");
+      verif = 0;
+      return false;
+    } else verif = 1;
+    let isnum = /^\d+$/.test(idblog);
+      if (isnum == false) {   
+        alert("ID blog ne doit pas comporter une Lettre");
+        verif = 0;
+        return false;
+      } else verif = 1;
+
+
+    if (verif == 1) {  
+      return true;
+    }
+  }
+
+
+</script>
 <?php
 include 'footer.php';
 

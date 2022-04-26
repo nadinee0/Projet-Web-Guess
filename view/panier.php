@@ -1,6 +1,27 @@
 
 <?php
 include 'header.php';
+include $_SERVER["DOCUMENT_ROOT"].'/proj/controller/coupon.php';
+$coupona=new couponA();
+$coupon=0;
+if (isset($_SESSION["coupon"])&&!empty($_SESSION["coupon"])){
+	$resscoupon=$coupona->getcoupon($_SESSION["coupon"]); 
+	if ($resscoupon != false)
+	{
+		$coupon=1;
+	}
+}
+$total = 160;
+
+if (isset($_GET["coupon"])){
+
+$resscoupon=$coupona->getcoupon($_GET["coupon"]); 
+if ($resscoupon != false)
+{
+	$_SESSION["coupon"] = $_GET["coupon"];
+	$_SESSION["pourcentage"] = $resscoupon["pourcentage"];
+}
+}
 ?>
 
         <main class="main">
@@ -89,7 +110,10 @@ include 'header.php';
 			            			<div class="cart-discount">
 			            				<form action="#">
 			            					<div class="input-group">
-				        						<input type="text" class="form-control" required placeholder="coupon code">
+
+				        						<input type="text" name="coupon" class="form-control"
+												<?php if ($coupon == 1) echo 'value="'.$_SESSION["coupon"].'"'; ?>
+												required placeholder="coupon code">
 				        						<div class="input-group-append">
 													<button class="btn btn-outline-primary-2" type="submit"><i class="icon-long-arrow-right"></i></button>
 												</div><!-- .End .input-group-append -->
@@ -108,7 +132,7 @@ include 'header.php';
 	                					<tbody>
 	                						<tr class="summary-subtotal">
 	                							<td>Subtotal:</td>
-	                							<td>$160.00</td>
+	                							<td>160.00 TND</td>
 	                						</tr><!-- End .summary-subtotal -->
 	                						<tr class="summary-shipping">
 	                							<td>Shipping:</td>
@@ -149,11 +173,23 @@ include 'header.php';
 	                							<td>Estimate for Your Country<br> <a href="dashboard.html">Change address</a></td>
 	                							<td>&nbsp;</td>
 	                						</tr><!-- End .summary-shipping-estimate -->
-
+											<?php 
+											if ($coupon ==1){
+											?>
 	                						<tr class="summary-total">
 	                							<td>Total:</td>
-	                							<td>$160.00</td>
+	                							<td style="text-decoration: line-through;"><?php echo $total.' TND'; ?></td>
 	                						</tr><!-- End .summary-total -->
+											<tr class="summary-total">
+	                							<td>Apres remise:</td>
+	                							<td style=""><?php echo $total - ($total*($_SESSION["pourcentage"]/100)).' TND'; ?></td>
+	                						</tr><!-- End .summary-total -->
+											<?php }else {?>
+												<tr class="summary-total">
+	                							<td>Total:</td>
+	                							<td style=""><?php echo $total.' TND'; ?></td>
+	                						</tr><!-- End .summary-total -->
+											<?php } ?>
 	                					</tbody>
 	                				</table><!-- End .table table-summary -->
 
