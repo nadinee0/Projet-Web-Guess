@@ -5,14 +5,16 @@
         private $prix=null;
         private $quantite=null;
         private $titre=null;
+        private $category=null;
         
         //private $password=null;
-        function __construct($ID, $description, $prix, $quantite,$titre){
+        function __construct($ID, $description, $prix, $quantite,$titre,$category){
             $this->ID=$ID;
             $this->description=$description;
             $this->prix=$prix;
             $this->quantite=$quantite;
             $this->titre=$titre;
+            $this->category=$category;
         }
         function getID(){
             return $this->ID;
@@ -28,6 +30,9 @@
         }
         function gettitre(){
             return $this->titre;
+        }
+        function getcategory(){
+            return $this->category;
         }
         
         

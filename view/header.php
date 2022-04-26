@@ -1,3 +1,8 @@
+<?php include_once '../controller/category.php'; 
+    $categorya=new categoryA();
+    $listecategory = $categorya->affichercategory();
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,9 +12,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Molla - Bootstrap eCommerce Template</title>
+    <title>Beaumetic website</title>
     <meta name="keywords" content="HTML5 Template">
-    <meta name="description" content="Molla - Bootstrap eCommerce Template">
+    <meta name="description" content="Beaumetic website">
     <meta name="author" content="p-themes">
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/icons/apple-touch-icon.png">
@@ -84,7 +89,7 @@
                         </button>
 
                         <a href="index.html" class="logo">
-                            <img src="assets/images/logo.png" alt="Molla Logo" width="105" height="25">
+                            <img src="assets/images/logo.jpg" alt="Molla Logo" width="105" height="25">
                         </a>
 
                         <nav class="main-nav">
@@ -460,10 +465,19 @@
                     <div class="header-right">
                         <div class="header-search">
                             <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
-                            <form action="#" method="get">
+                            <form action="searchproduct.php" method="get">
                                 <div class="header-search-wrapper">
+                                <select name="category" style="margin-left: 15px;padding:0;">
+                                  <?php
+                                  foreach ($listecategory as $category){
+                                      $nomcateg =$category['nom'] ;
+                                     $idcateg =$category['id'] ;
+                                     echo "<option value='$idcateg'>$nomcateg</option>";
+                                 }
+                                 ?>
+                                        </select>                                  
                                     <label for="q" class="sr-only">Search</label>
-                                    <input type="search" class="form-control" name="q" id="q" placeholder="Search in..." required>
+                                    <input type="search" class="form-control" name="search" id="q" placeholder="Search in..." required>
                                 </div><!-- End .header-search-wrapper -->
                             </form>
                         </div><!-- End .header-search -->

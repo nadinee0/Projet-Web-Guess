@@ -4,7 +4,19 @@ include 'header.php';
 include '../controller/product.php';
 
 $producta=new productA();
-$listeproduits=$producta->afficherproduct(); 
+//verifier que la donnée existe
+if(isset($_GET['page']))
+    {
+        $page = $_GET['page'];
+    }
+    else
+    {
+        $page = 1;
+    }
+	$num_per_page = 3;
+    $start_from = ($page-1)*2;
+    
+$listeproduits=$producta->afficherproduct($start_from,$num_per_page); 
 ?>
         <main class="main">
         	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
@@ -98,11 +110,11 @@ $listeproduits=$producta->afficherproduct();
 			            ?>
 
                                 
-                                    <div class="col-6 col-md-4 col-lg-4">
+                                       <div class="col-6 col-md-4 col-lg-4">
                                         <div class="product product-7 text-center">
                                             <figure class="product-media">
                                                 <span class="product-label label-new">New</span>
-                                                <a href="product.html">
+                                                <a href="product.php?id=<?php echo $produit['ID']; ?>">
                                                     <img src="assets/images/products/single/extended/p1.jpg" alt="Product image" class="product-image">
                                                 </a>
 
@@ -113,9 +125,10 @@ $listeproduits=$producta->afficherproduct();
                                                 </div><!-- End .product-action-vertical -->
 
                                                 <div class="product-action">
-                                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                                    <a href="product.php?id=<?php echo $produit['ID']; ?>" class="btn-product btn-cart"><span>add to cart</span></a>
                                                 </div><!-- End .product-action -->
                                             </figure><!-- End .product-media -->
+
 
                                             <div class="product-body">
                                                 <div class="product-cat">
@@ -145,27 +158,40 @@ $listeproduits=$producta->afficherproduct();
                                 </div><!-- End .row -->
                             </div><!-- End .products -->
 
-
-
-
-                			<nav aria-label="Page navigation">
+							<nav aria-label="Page navigation">
 							    <ul class="pagination justify-content-center">
-							        <li class="page-item disabled">
-							            <a class="page-link page-link-prev" href="#" aria-label="Previous" tabindex="-1" aria-disabled="true">
-							                <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
-							            </a>
-							        </li>
-							        <li class="page-item active" aria-current="page"><a class="page-link" href="#">1</a></li>
-							        <li class="page-item"><a class="page-link" href="#">2</a></li>
-							        <li class="page-item"><a class="page-link" href="#">3</a></li>
-							        <li class="page-item-total">of 6</li>
-							        <li class="page-item">
-							            <a class="page-link page-link-next" href="#" aria-label="Next">
-							                Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
-							            </a>
-							        </li>
-							    </ul>
-							</nav>
+	<!-- pagination -->								
+							<?php 
+        
+		$nbretotal=$producta->totalproduct(); 
+		$total_record = $nbretotal->fetchColumn();
+		
+		$total_page = ceil($total_record/$num_per_page);
+
+		if($page>1)
+		{	echo '<li class="page-item">';
+			echo "<a href='category.php?page=".($page-1)."' class='page-link page-link-prev'  > <span aria-hidden='true'><i class='icon-long-arrow-left'></i>Prev</a>";
+			echo '</li>';
+		}
+
+		
+		for($i=1;$i<$total_page;$i++)
+		{echo '<li class="page-item">';
+			echo "<a href='category.php?page=".$i."' class='page-link'  >$i</a>";
+			echo '</li>';
+		}
+
+		if($i>$page)
+		{	echo '<li class="page-item">';
+			echo "<a href='category.php?page=".($page+1)."' class='page-link page-link-next'>Next <span aria-hidden='true'><i class='icon-long-arrow-right'></i></a>";
+			echo '</li>';
+		}
+
+?>
+<nav aria-label="Page navigation">
+							    <ul class="pagination justify-content-center">
+
+
                 		</div><!-- End .col-lg-9 -->
                 		<aside class="col-lg-3 order-lg-first">
                 			<div class="sidebar sidebar-shop">
@@ -187,7 +213,7 @@ $listeproduits=$producta->afficherproduct();
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="cat-1">
-														<label class="custom-control-label" for="cat-1">Dresses</label>
+														<label class="custom-control-label" for="cat-1">cleansers</label>
 													</div><!-- End .custom-checkbox -->
 													<span class="item-count">3</span>
 												</div><!-- End .filter-item -->
@@ -195,7 +221,7 @@ $listeproduits=$producta->afficherproduct();
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="cat-2">
-														<label class="custom-control-label" for="cat-2">T-shirts</label>
+														<label class="custom-control-label" for="cat-2">Toner</label>
 													</div><!-- End .custom-checkbox -->
 													<span class="item-count">0</span>
 												</div><!-- End .filter-item -->
@@ -203,7 +229,7 @@ $listeproduits=$producta->afficherproduct();
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="cat-3">
-														<label class="custom-control-label" for="cat-3">Bags</label>
+														<label class="custom-control-label" for="cat-3">face serums</label>
 													</div><!-- End .custom-checkbox -->
 													<span class="item-count">4</span>
 												</div><!-- End .filter-item -->
@@ -211,7 +237,7 @@ $listeproduits=$producta->afficherproduct();
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="cat-4">
-														<label class="custom-control-label" for="cat-4">Jackets</label>
+														<label class="custom-control-label" for="cat-4">moisturizers</label>
 													</div><!-- End .custom-checkbox -->
 													<span class="item-count">2</span>
 												</div><!-- End .filter-item -->
@@ -219,7 +245,7 @@ $listeproduits=$producta->afficherproduct();
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="cat-5">
-														<label class="custom-control-label" for="cat-5">Shoes</label>
+														<label class="custom-control-label" for="cat-5">masks + peels</label>
 													</div><!-- End .custom-checkbox -->
 													<span class="item-count">2</span>
 												</div><!-- End .filter-item -->
@@ -227,7 +253,7 @@ $listeproduits=$producta->afficherproduct();
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="cat-6">
-														<label class="custom-control-label" for="cat-6">Jumpers</label>
+														<label class="custom-control-label" for="cat-6">Hand + Nail Creams</label>
 													</div><!-- End .custom-checkbox -->
 													<span class="item-count">1</span>
 												</div><!-- End .filter-item -->
@@ -235,7 +261,7 @@ $listeproduits=$producta->afficherproduct();
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="cat-7">
-														<label class="custom-control-label" for="cat-7">Jeans</label>
+														<label class="custom-control-label" for="cat-7">lips</label>
 													</div><!-- End .custom-checkbox -->
 													<span class="item-count">1</span>
 												</div><!-- End .filter-item -->
@@ -243,7 +269,7 @@ $listeproduits=$producta->afficherproduct();
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="cat-8">
-														<label class="custom-control-label" for="cat-8">Sportwear</label>
+														<label class="custom-control-label" for="cat-8">eye</label>
 													</div><!-- End .custom-checkbox -->
 													<span class="item-count">0</span>
 												</div><!-- End .filter-item -->
@@ -252,84 +278,9 @@ $listeproduits=$producta->afficherproduct();
 									</div><!-- End .collapse -->
         						</div><!-- End .widget -->
 
-        						<div class="widget widget-collapsible">
-    								<h3 class="widget-title">
-									    <a data-toggle="collapse" href="#widget-2" role="button" aria-expanded="true" aria-controls="widget-2">
-									        Size
-									    </a>
-									</h3><!-- End .widget-title -->
+        						
 
-									<div class="collapse show" id="widget-2">
-										<div class="widget-body">
-											<div class="filter-items">
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="size-1">
-														<label class="custom-control-label" for="size-1">XS</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="size-2">
-														<label class="custom-control-label" for="size-2">S</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" checked id="size-3">
-														<label class="custom-control-label" for="size-3">M</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" checked id="size-4">
-														<label class="custom-control-label" for="size-4">L</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="size-5">
-														<label class="custom-control-label" for="size-5">XL</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="size-6">
-														<label class="custom-control-label" for="size-6">XXL</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
-											</div><!-- End .filter-items -->
-										</div><!-- End .widget-body -->
-									</div><!-- End .collapse -->
-        						</div><!-- End .widget -->
-
-        						<div class="widget widget-collapsible">
-    								<h3 class="widget-title">
-									    <a data-toggle="collapse" href="#widget-3" role="button" aria-expanded="true" aria-controls="widget-3">
-									        Colour
-									    </a>
-									</h3><!-- End .widget-title -->
-
-									<div class="collapse show" id="widget-3">
-										<div class="widget-body">
-											<div class="filter-colors">
-												<a href="#" style="background: #b87145;"><span class="sr-only">Color Name</span></a>
-												<a href="#" style="background: #f0c04a;"><span class="sr-only">Color Name</span></a>
-												<a href="#" style="background: #333333;"><span class="sr-only">Color Name</span></a>
-												<a href="#" class="selected" style="background: #cc3333;"><span class="sr-only">Color Name</span></a>
-												<a href="#" style="background: #3399cc;"><span class="sr-only">Color Name</span></a>
-												<a href="#" style="background: #669933;"><span class="sr-only">Color Name</span></a>
-												<a href="#" style="background: #f2719c;"><span class="sr-only">Color Name</span></a>
-												<a href="#" style="background: #ebebeb;"><span class="sr-only">Color Name</span></a>
-											</div><!-- End .filter-colors -->
-										</div><!-- End .widget-body -->
-									</div><!-- End .collapse -->
-        						</div><!-- End .widget -->
+        						
 
         						<div class="widget widget-collapsible">
     								<h3 class="widget-title">
@@ -344,51 +295,38 @@ $listeproduits=$producta->afficherproduct();
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="brand-1">
-														<label class="custom-control-label" for="brand-1">Next</label>
+														<label class="custom-control-label" for="brand-1">Yves Rocher</label>
 													</div><!-- End .custom-checkbox -->
 												</div><!-- End .filter-item -->
 
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="brand-2">
-														<label class="custom-control-label" for="brand-2">River Island</label>
+														<label class="custom-control-label" for="brand-2">Kylie Cosmetics</label>
 													</div><!-- End .custom-checkbox -->
 												</div><!-- End .filter-item -->
 
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="brand-3">
-														<label class="custom-control-label" for="brand-3">Geox</label>
+														<label class="custom-control-label" for="brand-3">Florence by Mills</label>
 													</div><!-- End .custom-checkbox -->
 												</div><!-- End .filter-item -->
 
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="brand-4">
-														<label class="custom-control-label" for="brand-4">New Balance</label>
+														<label class="custom-control-label" for="brand-4">Nivea</label>
 													</div><!-- End .custom-checkbox -->
 												</div><!-- End .filter-item -->
 
 												<div class="filter-item">
 													<div class="custom-control custom-checkbox">
 														<input type="checkbox" class="custom-control-input" id="brand-5">
-														<label class="custom-control-label" for="brand-5">UGG</label>
+														<label class="custom-control-label" for="brand-5">L'Oréal</label>
 													</div><!-- End .custom-checkbox -->
 												</div><!-- End .filter-item -->
 
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="brand-6">
-														<label class="custom-control-label" for="brand-6">F&F</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
-
-												<div class="filter-item">
-													<div class="custom-control custom-checkbox">
-														<input type="checkbox" class="custom-control-input" id="brand-7">
-														<label class="custom-control-label" for="brand-7">Nike</label>
-													</div><!-- End .custom-checkbox -->
-												</div><!-- End .filter-item -->
 
 											</div><!-- End .filter-items -->
 										</div><!-- End .widget-body -->

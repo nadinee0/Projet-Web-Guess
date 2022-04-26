@@ -16,6 +16,7 @@ $listeproduct=$producta->afficherproductback();
 				<th>prix</th>
 				<th>quantite</th>
 				<th>titre</th>
+				<th>categorie</th>
 				
 			</tr>
 			<?php
@@ -27,6 +28,7 @@ $listeproduct=$producta->afficherproductback();
 				<td><?php echo $product['prix']; ?></td>
 				<td><?php echo $product['quantite']; ?></td>
 				<td><?php echo $product['titre']; ?></td>
+				<td><?php echo $product['category']; ?></td>
 				<td>
 					<form method="POST" action="modifierproduct.php">
 						<input type="submit" name="Modifier" value="Modifier">
