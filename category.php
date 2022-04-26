@@ -1,11 +1,10 @@
 
 <?php
 include 'header.php';
-include 'C:\\xampp\\htdocs\\proj\\controller\\product.php';
+include '../controller/product.php';
 
-$producta = new productA();
+$producta=new productA();
 $listeproduits=$producta->afficherproduct(); 
-
 ?>
         <main class="main">
         	<div class="page-header text-center" style="background-image: url('assets/images/page-header-bg.jpg')">
@@ -114,16 +113,8 @@ $listeproduits=$producta->afficherproduct();
                                                 </div><!-- End .product-action-vertical -->
 
                                                 <div class="product-action">
-											
-												<!-- <a href="panier.php" class="btn-product btn-cart"><span>add to cart</span></a> 
-							-->  <!--<button type="submit" class="btn btn-warning my-3">Add to Cart</button> -->
-							<form action="panier.php" method="post">
-	             <input type="hidden" name="id_Produit" value="<?=$produit['id_Produit']?>">        
-				     <input type="submit" value="Add to Cart">
-	         </form>
-											</div><!-- End .product-action -->
-												
-	
+                                                    <a href="#" class="btn-product btn-cart"><span>add to cart</span></a>
+                                                </div><!-- End .product-action -->
                                             </figure><!-- End .product-media -->
 
                                             <div class="product-body">
@@ -429,8 +420,6 @@ $listeproduits=$producta->afficherproduct();
                 	</div><!-- End .row -->
                 </div><!-- End .container -->
             </div><!-- End .page-content -->
-			 
-
         </main><!-- End .main -->
         <?php
 include 'footer.php';

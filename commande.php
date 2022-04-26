@@ -1,93 +1,48 @@
-<?PHP 
-
+<?php
 class commande{
-	private $id_Produit;
-	private $Nom_Commande;
-	private $id_Client;
-	private $Prix;
-  private $Date_Commande;
-  private $id_Commande;
-
-
-
-    function __construct($id_Produit,$Nom_Commande,$id_Client,$Prix,$Date_Commande,$id_Commande)
+    private ?int $id = null;
+    private ?string $date_cmd = null;
+    private ?string $adresse = null;
+    private ?float $prix = null;
+    private ?int $idClient = null;
+    function __construct(string $date_cmd,string $adresse,float $prix,int $idClient)
     {
-		$this->id_Produit=$id_Produit;
-		$this->Nom_Commande=$Nom_Commande;
-		$this->id_Client=$id_Client;
-		$this->Prix=$Prix;
-    $this->Date_Commande=$Date_Commande;
-
-
-	}
-     
-    //////////////////////////////////////////////////////////////
-
-    function getid_Produit()
-    {
-		return $this->id_Produit;
+        
+        $this->date_cmd=$date_cmd;
+        $this->adresse=$adresse;
+        $this->prix=$prix;
+        $this->idClient=$idClient;
     }
-    
-    function getNom_Commande()
-    {
-		return $this->Nom_Commande;
+    function getId(): int{
+        return $this->id;
     }
-    
-    function getid_Client()
-    {
-		return $this->id_Client;
+    function getDate_cmd(): string{
+        return $this->date_cmd;
     }
-    
-    function getPrix()
-    {
-		return $this->Prix;
-    }
-    
-    function getDate_Commande()
-    {
-		return $this->Date_Commande;
-    }
-    
-    function getid_Commande()
-    {
-		return $this->id_Commande;
-    }
-    
    
-
-    //////////////////////////////////////////////////////////////
-    
-    function setid_Produit($id_Produit)
-    {
-		$this->id_Produit=$id_Produit;
-    }
-
-    function setNom_Commande($Nom_Commande)
-    {
-		$this->Nom_Commande=$Nom_Commande;
+    function getAdresse(): string{
+        return $this->adresse;
     }
     
-    function setid_Client($id_Client)
-    {
-		$this->id_Client;
+    function getPrix(): float{
+        return $this->prix;
+    }
+    function getIdClient(): int{
+        return $this->idClient;
+    }
+    function setDate_cmd(string $date_cmd): void{
+        $this->date_cmd=$date_cmd;
     }
     
-    function setPrix($Prix)
-    {
-		$this->Prix=$Prix;
+    function setAdresse(string $adresse): void{
+        $this->adresse=$adresse;
     }
-    
-    function setDate_Commande($Date_Commande)
-    {
-		$this->Date_Commande;
+    function setPrix(float $prix): void{
+        $this->prix=$prix;
     }
-    
-    function setid_Commande($id_Commande)
-    {
-		$this->id_Commande=$id_Commande;
+    function setIdClient(float $idClient): void{
+        $this->idClient=$idClient;
     }
-
    
 }
-
 ?>

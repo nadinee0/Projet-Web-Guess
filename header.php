@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="assets/css/plugins/owl-carousel/owl.carousel.css">
     <!-- Main CSS File -->
     <link rel="stylesheet" href="assets/css/style.css">
+
 </head>
 
 <body>
@@ -492,18 +493,9 @@
                         </div><!-- End .compare-dropdown -->
 
                         <div class="dropdown cart-dropdown">
-                            <a href="panier.php" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                            <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
                                 <i class="icon-shopping-cart"></i>
-                               <?php
-
-                        if (isset($_SESSION['id_Produit'])){
-                            $count = count($_SESSION['id_Produit']);
-                            echo "<span id=\"cart_count\" class=\"text-warning bg-light\">$count</span>";
-                        }else{
-                            echo "<span id=\"cart_count\" class=\"text-warning bg-light\">0</span>";
-                        }
-
-                        ?>
+                                <span class="cart-count">2</span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right">
@@ -556,8 +548,7 @@
                                 </div><!-- End .dropdown-cart-total -->
 
                                 <div class="dropdown-cart-action">
-                                    <a href="panier.php" class="btn btn-primary">View Cart </a>
-                                   
+                                    <a href="cart.html" class="btn btn-primary">View Cart</a>
                                     <a href="checkout.html" class="btn btn-outline-primary-2"><span>Checkout</span><i class="icon-long-arrow-right"></i></a>
                                 </div><!-- End .dropdown-cart-total -->
                             </div><!-- End .dropdown-menu -->
