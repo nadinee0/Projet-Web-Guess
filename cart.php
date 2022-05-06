@@ -29,6 +29,18 @@ class paniers{
         }
     }
 
+    function afficherCartCommand(int $id){
+        $sql="select * from cart,products,cart_products,command WHERE cart.id=cart_products.id_panier and products.ref=cart_products.id_produit and command.cart_id=cart.id and command.id =".$id;
+        $db = config::getConnexion();
+        try{
+            $liste = $db->query($sql);
+            return $liste->fetchAll();
+        }
+        catch(Exception $e){
+            echo 'Erreur: '.$e->getMessage();
+        }
+    }
+
     function addToCart(int $id_produit,int $id_panier,int $quantite){
         $sql="insert into cart_products (id_panier	,id_produit	,quantite) values(".$id_panier." , ".$id_produit." , ".$quantite.");";
         $db = config::getConnexion();

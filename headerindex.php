@@ -121,6 +121,7 @@
 
                                 <div class="dropdown-cart-action">
                                     <a href="cart.php" class="btn btn-primary">View Cart</a>
+                                    <a href="history.php" class="btn btn-primary">Historique</a>
                                 </div><!-- End .dropdown-cart-total -->
                             </div><!-- End .dropdown-menu -->
                         </div><!-- End .cart-dropdown -->

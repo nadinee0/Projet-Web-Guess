@@ -16,4 +16,17 @@ class commandes{
             echo 'Erreur: '.$e->getMessage();
         }
     }
+
+    function getOrders(){
+        $sql="SELECT command.id comm_id,date,sum(prix*quantite) totale FROM command,cart,cart_products,products where  command.cart_id=cart.id and cart_products.id_panier = cart.id and cart_products.id_produit = products.ref GROUP by cart.id;";
+        $db = config::getConnexion();
+        try{
+            $liste = $db->query($sql);
+            
+            return $liste->fetchAll();
+        }
+        catch(Exception $e){
+            echo 'Erreur: '.$e->getMessage();
+        }
+    }
 }
