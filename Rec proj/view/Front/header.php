@@ -398,12 +398,15 @@
   
 
                                 <li>
-                                    <a href="elements-list.html" class="sf-with-ul">Elements</a>
+                                    <a href="reclamation/HistoriqueReclamation.php.php">Historique</a></li>
 
                                    
                                         <li><a href="reclamation/ajoutReclamation.php">Reclamation</a></li>
                                      
                                 </li>
+                                
+                             
+
 
                             
                                 <li>

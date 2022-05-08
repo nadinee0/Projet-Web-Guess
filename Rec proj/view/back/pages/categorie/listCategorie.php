@@ -8,7 +8,12 @@
   $categorieC=new categorieC();
   $listecategorie=$categorieC->afficher();
 
- 
+ /* 
+  else if(isset($_POST['supprimer'])){
+   
+    $produitC->supprimerproduit($_POST['reference']);
+    header('location: list_produits.php');
+  }*/
   
 
   ?>

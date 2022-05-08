@@ -360,9 +360,12 @@
                                 
                                 <li>
                                   
-                                <li><a href="reclamation/ajoutReclamation.php">reclamation</a></li>
+                                <a href="reclamation/HistoriqueReclamation.php">Historique</a></li>
                                 </li>
-                              
+                                <li>
+                                  
+                                  <li><a href="reclamation/ajoutReclamation.php">reclamation</a></li>
+                                  </li>
                               
                               
                                 <li>

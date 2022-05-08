@@ -24,6 +24,21 @@
                 <label>E-mail:</label>
                 <input id="email" class="field_class" name="email" type="text" placeholder="Saisissez votre e-mail"  >
 
+                <label>Type</label>
+                <select  class="field_class" name="type" id="type">
+                <option value="">--Please choose an option--</option>
+                <option value="Interne">Intere</option>
+                <option value="Externe">Externe</option>
+               
+</select>
+
+ 
+<BR>
+              
+
+                <label>User</label>
+                <input id="number" class="field_class" name="number" type="text" placeholder="Saisissez le user"  >
+
 
            
     

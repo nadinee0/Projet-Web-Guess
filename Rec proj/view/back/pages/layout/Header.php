@@ -215,8 +215,15 @@
                   <p>List Reclamation</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="../reclamation/statReclamation.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Stat Reclamation</p>
+                </a>
+              </li>
       
             </ul>
+            
           </li>
          
         <li class="nav-item">

@@ -28,6 +28,16 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
+          <script>
+        function Export()
+        {
+            var conf = confirm("Export  to CSV?");
+            if(conf == true)
+            {
+                window.open("export.php", '_blank');
+            }
+        }
+    </script>
           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
@@ -39,6 +49,16 @@
             });
         });
     </script>
+         
+         <script type="text/javascript">
+            function imprimer_page(){
+            window.print();
+             }
+        </script>
+         <PHP header('Expires: 0');
+          header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+          header('Pragma: public');
+          ?>
             <h1>
               Reclamation
             </h1>
@@ -59,11 +79,21 @@
         <div class="row">
         <label>Recherche:<input id="myInput"  type="text"name="rechercher" class="form-control input-sm" placeholder="" aria-controls="DataTables_Table_1"></label></div>
           <!-- left column -->
-          <div class="col-md-8">
+          <div class="container">
+          <button  id="impression" name="impression" onclick="imprimer_page()" type="button" class="btn bg-green waves-effect">
+                                    <i class="material-icons">print</i>
+                                    <span>PRINT...</span>
+                                </button>
+                                <button type="button"  onclick="Export()"class="btn bg-blue waves-effect">
+                                    <i class="material-icons">report_problem</i>
+                                    <span>Export to csv</span>
+                                </button>
+      <br>
+      <br>
             <!-- general form elements -->
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">List Reclamation</h3>
+                <h3 class="card-title">Lsit Reclamation</h3>
               </div>
               <!-- /.card-header -->
               <!-- form start -->
@@ -74,6 +104,9 @@
                                             <th>Nom</th>
                                             <th>Reference</th>
                                             <th>email</th>
+                                            <th>type</th>
+                                            <th>status</th>
+                                            <th>user</th>
                                             
                                             <th> action </th>
                                             
@@ -94,9 +127,13 @@
                                 <td>
                                 <?php echo $row['ref']; ?>
                                 </td>
-                                <td class="desc"><?PHP echo $row['email']; ?></td>
+                                <td ><?PHP echo $row['email']; ?></td>
+                                <td ><?PHP echo $row['type']; ?></td>
+                                <td ><?PHP echo $row['status']; ?></td>
+                                <td ><?PHP echo $row['idUser']; ?></td>
                                
                                 <td>
+                                  
                                 <form
                                   method="POST" action="supprimerReclamation.php">
                                   <button type="submit"  name="supprimer"  class="btn btn-danger btn-circle-lg waves-effect waves-circle waves-float">

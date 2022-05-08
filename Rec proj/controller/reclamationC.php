@@ -22,13 +22,16 @@
 		
 		function ajouter($reclamation){
 			$db = config::getConnexion();
-			$sql = "INSERT INTO reclamation (?,?,?,?) VALUES (:id,:nom,:ref,:email)";
+			$sql = "INSERT INTO reclamation (?,?,?,?,?,?,?) VALUES (:id,:nom,:ref,:email,:type,:status,idUser)";
 			try {
 				$req = $db->prepare($sql);
 			$req->bindValue(':id',$reclamation->getId());
             $req->bindValue(':nom',$reclamation->getnom());
             $req->bindValue(':ref',$reclamation->getRef());
             $req->bindValue(':email',$reclamation->getemail());
+			$req->bindValue(':type',$reclamation->gettype());
+			$req->bindValue(':status',$reclamation->getstatus());
+			$req->bindValue(':idUser',$reclamation->getidUser());
 			
 	
 			$req->execute();
@@ -49,13 +52,16 @@
 		function modifierreclamation($reclamation,$id){
 			$db = config::getConnexion();
 			
-			$sql="UPDATE reclamation SET nom=:nom,ref=:ref,email=:email WHERE id=:id";
+			$sql="UPDATE reclamation SET nom=:nom,ref=:ref,email=:email, type=:type,status=:status, idUser=:idUser WHERE id=:id";
 			try{
 				$req=$db->prepare($sql);
 				
             $req->bindValue(':nom',$reclamation->getnom());
             $req->bindValue(':ref',$reclamation->getRef());
             $req->bindValue(':email',$reclamation->getemail());
+			$req->bindValue(':type',$reclamation->gettype());
+			$req->bindValue(':status',$reclamation->getstatus());
+			$req->bindValue(':idUser',$reclamation->getIdUser());
 
 				$req->bindValue(':id',$id);
 				$s=$req->execute();
@@ -78,6 +84,14 @@
 		function reccupererreclamation($id){
 			$db = config::getConnexion();
 			$sql="SELECT * from reclamation where id=$id";
+			$liste=$db->query($sql);
+			return $liste;
+		}
+
+		function HistoriqueRclamation($id){
+			$db = config::getConnexion();
+		    $idUser = 1;
+			$sql="SELECT * from reclamation where idUser= $idUser";
 			$liste=$db->query($sql);
 			return $liste;
 		}

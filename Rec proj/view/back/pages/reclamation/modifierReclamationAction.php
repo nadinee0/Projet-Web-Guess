@@ -26,6 +26,9 @@ include_once "../../../../model/reclamation.php";
             $nom = isset($_POST['nom']) ? $_POST['nom'] : '';
             $ref = isset($_POST['ref']) ? $_POST['ref'] : '';
             $email = isset($_POST['email']) ? $_POST['email'] : '';
+            $type = isset($_POST['type']) ? $_POST['type'] : '';
+            $status = isset($_POST['status']) ? $_POST['status'] : '';
+            $idUser = isset($_POST['idUser']) ? $_POST['idUser'] : '';
             if ( preg_match ( " /^.+@.+\.[a-zA-Z]{2,}$/ " , $email ) )  
             {
             
@@ -38,8 +41,8 @@ include_once "../../../../model/reclamation.php";
             }else { echo "champs vide !";}
             
             // Update the record
-            $stmt = $pdo->prepare('UPDATE reclamation SET  nom = ?, ref = ?, email = ? WHERE id = ?');
-            $stmt->execute([ $nom, $ref, $email, $_GET['id']]);
+            $stmt = $pdo->prepare('UPDATE reclamation SET  nom = ?, ref = ?, email = ?, type =?, status= ?, idUser=? WHERE id = ?');
+            $stmt->execute([ $nom, $ref, $email,$type,$status,$idUser, $_GET['id']]);
             $msg = 'Updated Successfully!';
         }
         // Get the reclamation from the reclamations table

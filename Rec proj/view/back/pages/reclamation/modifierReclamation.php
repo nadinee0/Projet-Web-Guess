@@ -361,6 +361,20 @@ function pdo_connect_mysql() {
             <td>email</td>
             <td><input type='text' name='email'  value ="<?php echo $reclamation['email'];?>" class='form-control' /></td>
         </tr>
+        <tr>
+
+        
+            <td>type</td>
+            <td><input type='text' name='type'  value ="<?php echo $reclamation['type'];?>" class='form-control' /></td>
+        </tr>
+        <tr>
+            <td>status</td>
+            <td><input type='text' name='status'  value ="<?php echo $reclamation['status'];?>" class='form-control' /></td>
+        </tr>
+        <tr>
+            <td>idUser</td>
+            <td><input type='text' name='idUser'  value ="<?php echo $reclamation['idUser'];?>" class='form-control' /></td>
+        </tr>
        
         
      

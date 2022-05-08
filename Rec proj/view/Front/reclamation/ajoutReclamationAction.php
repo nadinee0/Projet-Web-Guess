@@ -24,6 +24,9 @@
             $ref = isset($_POST['ref']) ? $_POST['ref'] : '';
             $nom = isset($_POST['nom']) ? $_POST['nom'] : '';
             $email = isset($_POST['email']) ? $_POST['email'] : '';
+            $type = isset($_POST['type']) ? $_POST['type'] : '';
+            $status = isset($_POST['status']) ? $_POST['status'] : '';
+            $idUser = isset($_POST['idUser']) ? $_POST['idUser'] : '';
             if ( preg_match ( " /^.+@.+\.[a-zA-Z]{2,}$/ " , $email ) )  
             {
             
@@ -31,13 +34,13 @@
             else{
                 echo "addr mail n'est pas valide ";
             }
-            if($nom != ""  && $email != "" && $ref != ""){ // si les saisies ne sont pas vides
+            if($nom != ""  && $email != "" && $ref != "" && $type != "" && $idUser != ""){ // si les saisies ne sont pas vides
                
             }else { echo "champs vide !";}
             
             
-            $stmt = $pdo->prepare('INSERT INTO reclamation VALUES (?, ?, ?, ?)');
-            $stmt->execute([$id, $nom, $ref, $email]);
+            $stmt = $pdo->prepare('INSERT INTO reclamation VALUES (?, ?, ?, ?, ?, ?, ?)');
+            $stmt->execute([$id, $nom, $ref, $email,$type,$status,$idUser]);
             // Output message
             $msg = 'Created Successfully!';
         }

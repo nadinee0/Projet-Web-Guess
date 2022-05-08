@@ -5,14 +5,19 @@
 		public $nom;
 		public $ref;
 		public $email;
-		
-		
-		function __construct($id,$nom,$ref,$email)
+		public $type;
+		public $status;
+		public $idUser;
+
+		function __construct($id,$nom,$ref,$email, $type, $status, $idUser)
 		{
 			$this->id=$id;
 			$this->nom=$nom;
 			$this->ref=$ref;
 			$this->email=$email;	
+			$this->type=$type;	
+			$this->status=$status;	
+			$this->idUser=$idUser;	
 		}
 
 		function getId(){
@@ -28,7 +33,17 @@
 			return $this->email;
 		}
 	
-		
+		function getType(){
+			return $this->type;
+		}
+	
+		function getStatus(){
+			return $this->status;
+		}
+		function getIdUser(){
+			return $this->idUser;
+		}
+
 
 		function setId($id){
 			$this->id=$id;
@@ -41,6 +56,15 @@
 		}
 		function setEmail($email){
 			$this->email=$email;
+		}
+		function setType($type){
+			$this->type=$type;
+		}
+		function setStatus($status){
+			$this->status=$status;
+		}
+		function setIdUser($idUser){
+			$this->idUser=$idUser;
 		}
 		
 		
