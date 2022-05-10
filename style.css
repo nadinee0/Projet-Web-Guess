@@ -1,0 +1,47 @@
+@font-face {
+    font-family: 'LovedbytheKing-Regular';
+    src : url(Police/LovedbytheKing-Regular.ttf);
+}
+@font-face
+{
+font-family: laPolice ;
+src : url(Police/Langar-Regular.ttf);
+}
+h6
+{
+
+    background-color:rgb(89, 193, 207) ;
+    color:rgb(34, 33, 33);
+    border: 5px solid black;    text-align: center;
+    font-size:25px;
+    font-weight: bold;
+    width: 100%;
+        animation: textanimation 3s ease-in-out;
+}
+.backk 
+{background-image: url(doc.jpg);
+
+}
+
+.nameprodd {font-size: 70px;
+    width: 100%;
+    font-family: 'LovedbytheKing-Regular';
+
+    src : url(Police/LovedbytheKing-Regular.ttf);
+    color: rgb(8, 0, 0);
+}
+@keyframes textanimation {
+    0% { letter-spacing: 30px;
+
+    }100% {
+        letter-spacing: 5px;
+    }
+}
+p {
+    background-color:rgb(89, 193, 207) ;
+    color:rgb(34, 33, 33);
+    border: 2px solid black;
+    font-size:40px;
+    font-family: laPolice;
+    src : url(police/Langar-Regular.ttf);
+}
